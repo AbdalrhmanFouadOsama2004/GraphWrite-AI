@@ -1,2 +1,185 @@
-# GraphWrite-AI
-An educational AI-agent project exploring stateful LLM workflows with LangGraph and Groq, including an essay-writing pipeline from outline to polished draft.
+# GraphWrite AI
+
+> An educational AI-agent project exploring stateful LLM workflows with LangGraph and Groq, including an essay-writing pipeline from outline to polished draft.
+
+## Overview
+
+**GraphWrite AI** is a Jupyter/Google Colab notebook that demonstrates how to build LLM-powered workflows with **LangGraph**, **LangChain**, and **Groq**. Its featured workflow creates an essay outline, writes a draft, and polishes the result through a sequence of graph nodes.
+
+The notebook also explores core agent-building patterns such as conditional routing, conversation memory, human-in-the-loop checkpoints, tool calling, streaming, iterative research, map-reduce summarization, and multi-agent collaboration.
+
+> **Project scope:** This repository currently represents a learning/demo notebook, rather than a packaged production application. The optional Gradio cell is a separate chatbot demo and may need adjustment before it runs independently.
+
+## Features
+
+- **Essay-writing pipeline** — generates an outline, drafts an essay, and polishes the final version.
+- **Stateful graph workflows** — uses LangGraph `StateGraph`, nodes, edges, and typed state.
+- **Conditional routing** — routes requests to different handlers based on intent.
+- **Conversation memory** — demonstrates checkpointing with `MemorySaver` and thread IDs.
+- **Human-in-the-loop** — shows how execution can pause for approval before continuing.
+- **Tool-calling agent** — connects an LLM to arithmetic tools (`add`, `subtract`, `multiply`, and `divide`).
+- **Streaming** — demonstrates streaming graph state updates.
+- **Iterative research loop** — gathers multiple findings and synthesizes them into an answer.
+- **Map-reduce summarization** — summarizes individual documents and combines their summaries.
+- **Multi-agent workflow** — separates research, writing, critique, and finalization stages.
+- **Optional Gradio interface** — includes a basic chatbot UI example.
+
+## Tech Stack
+
+- [Python](https://www.python.org/)
+- [LangGraph](https://www.langchain.com/langgraph)
+- [LangChain](https://www.langchain.com/)
+- [Groq](https://groq.com/)
+- [Llama 3.3 70B Versatile](https://console.groq.com/docs/models) (configured in the notebook)
+- [Gradio](https://www.gradio.app/)
+- [Jupyter Notebook](https://jupyter.org/) / Google Colab
+
+## Workflow
+
+The featured essay-writing graph follows this sequence:
+
+```text
+START
+  |
+  v
+Create Outline
+  |
+  v
+Write Draft
+  |
+  v
+Polish Essay
+  |
+  v
+END
+```
+
+Each node receives the current essay state and returns an update. The graph passes the generated outline and draft to the next stage until the polished essay is produced.
+
+## Getting Started
+
+### Option 1: Google Colab
+
+1. Upload `Essay AI Agent.ipynb` to [Google Colab](https://colab.research.google.com/).
+2. Add a Groq API key to Colab Secrets as `GROQ_API_KEY`, or provide it when prompted by the notebook.
+3. Run the notebook cells **in order**.
+4. When the essay-writer section runs, enter a topic to generate an outline, draft, and polished essay.
+
+### Option 2: Run locally
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/<your-username>/graphwrite-ai.git
+   cd graphwrite-ai
+   ```
+
+2. Create and activate a virtual environment:
+
+   ```bash
+   python -m venv .venv
+   ```
+
+   **macOS / Linux**
+   ```bash
+   source .venv/bin/activate
+   ```
+
+   **Windows PowerShell**
+   ```powershell
+   .venv\Scripts\Activate.ps1
+   ```
+
+3. Install the main dependencies:
+
+   ```bash
+   pip install langgraph langchain-groq langchain-core gradio jupyter
+   ```
+
+4. Set your Groq API key as an environment variable.
+
+   **macOS / Linux**
+   ```bash
+   export GROQ_API_KEY="your-groq-api-key"
+   ```
+
+   **Windows PowerShell**
+   ```powershell
+   $env:GROQ_API_KEY="your-groq-api-key"
+   ```
+
+5. Launch Jupyter and open the notebook:
+
+   ```bash
+   jupyter notebook
+   ```
+
+> **Note:** The notebook includes Google Colab-specific secret handling. When running locally, configure credentials through environment variables or another secure secret manager, and adapt the setup cell accordingly.
+
+## Configuration
+
+The notebook configures a Groq chat model using `ChatGroq`. You may need to update the model identifier if it is no longer available to your account.
+
+Keep API keys private:
+- Do not hard-code keys into notebook cells.
+- Do not commit `.env` files or credentials.
+- If a key has been exposed, revoke it and create a replacement.
+
+## Example
+
+For a topic such as:
+
+```text
+The role of artificial intelligence in education
+```
+
+The essay workflow produces:
+1. An outline with an introduction, main points, and conclusion.
+2. A short essay draft based on that outline.
+3. A polished version with improved clarity and flow.
+
+The output is generated by the configured language model, so factual claims should be reviewed and verified before use.
+
+## Repository Structure
+
+```text
+graphwrite-ai/
+├── GraphWrite AI.ipynb   # Main tutorial and demo notebook
+└── README.md              # Project documentation
+```
+
+## Limitations
+
+- The notebook is designed to be run sequentially; later examples may depend on variables defined in earlier cells.
+- The research loop generates model-produced findings and does not itself connect to a verified external search source.
+- The essay workflow improves structure and style, but does not guarantee factual accuracy, originality, or citation quality.
+- The optional Gradio cell currently calls `model.invoke(...)`, while the notebook's primary LLM variable is `llm`. The interface may require a code change before it works.
+- The Gradio example uses `share=True`, which creates a publicly accessible share link. Avoid entering private or sensitive information into a publicly shared demo.
+
+## Future Improvements
+
+- Turn the essay workflow into a standalone Python module or web application.
+- Add user-selectable essay length, tone, audience, and language.
+- Add source-backed research and citation verification.
+- Add automated tests for graph nodes and workflows.
+- Add a dependency file such as `requirements.txt`.
+- Improve error handling, logging, and configuration.
+- Refine the Gradio interface to call the essay-writing graph directly.
+
+## Learning Goals
+
+This project is intended to help learners understand:
+
+- How to model LLM workflows as graphs.
+- How to represent and update state between nodes.
+- How to use tools and conditional edges in an agent.
+- How checkpointing and human approval can fit into workflows.
+- How to compose multiple LLM steps into a writing pipeline.
+
+## Contributing
+
+Suggestions and improvements are welcome. For substantial changes, open an issue first to discuss what you would like to improve.
+
+---
+
+**Built as a hands-on exploration of LangGraph and LLM-powered agent workflows.**
