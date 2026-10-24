@@ -60,7 +60,7 @@ Each node receives the current essay state and returns an update. The graph pass
 
 ### Option 1: Google Colab
 
-1. Upload `Essay AI Agent.ipynb` to [Google Colab](https://colab.research.google.com/).
+1. Upload `GraphWrite AI.ipynb` to [Google Colab](https://colab.research.google.com/).
 2. Add a Groq API key to Colab Secrets as `GROQ_API_KEY`, or provide it when prompted by the notebook.
 3. Run the notebook cells **in order**.
 4. When the essay-writer section runs, enter a topic to generate an outline, draft, and polished essay.
